@@ -21,9 +21,13 @@ async function petsArea() {
     const petsData = await petsPromise.json()
     petsData.forEach(pet => {
         const clone = template.content.cloneNode(true)
+
         clone.querySelector("h3").textContent = pet.name
         clone.querySelector(".pet-description").textContent = pet.description
         clone.querySelector(".pet-age").textContent = createAgeText(pet.birthYear)
+
+        if (!pet.photo) pet.photo = "images/fallback.jpg"
+
         clone.querySelector(".pet-card-photo img").src = pet.photo
         clone.querySelector(".pet-card-photo img").alt = `A ${pet.species} named ${pet.name}.`
         wrapper.appendChild(clone)
